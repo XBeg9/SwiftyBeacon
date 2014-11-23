@@ -12,7 +12,7 @@ import CoreLocation
 typealias tRangeHandler = ([AnyObject]!) -> Void
 typealias tStateHandler = (CLRegionState!) -> Void
 
-class BeaconRegion: CLBeaconRegion {
+class SwiftyBeaconRegion: CLBeaconRegion {
     var rangeHandler: tRangeHandler?
     var stateHandler: tStateHandler?
     

@@ -13,9 +13,9 @@
 		4C14FF441A21C831001FD95A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C14FF431A21C831001FD95A /* Images.xcassets */; };
 		4C14FF471A21C831001FD95A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C14FF451A21C831001FD95A /* LaunchScreen.xib */; };
 		4C14FF531A21C831001FD95A /* SwiftyBeaconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14FF521A21C831001FD95A /* SwiftyBeaconTests.swift */; };
-		4C14FF621A21CC80001FD95A /* BeaconExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14FF5F1A21CC80001FD95A /* BeaconExtensions.swift */; };
-		4C14FF631A21CC80001FD95A /* BeaconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14FF601A21CC80001FD95A /* BeaconManager.swift */; };
-		4C14FF641A21CC80001FD95A /* BeaconRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14FF611A21CC80001FD95A /* BeaconRegion.swift */; };
+		4C14FF621A21CC80001FD95A /* SwiftyBeaconExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14FF5F1A21CC80001FD95A /* SwiftyBeaconExtensions.swift */; };
+		4C14FF631A21CC80001FD95A /* SwiftyBeaconManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14FF601A21CC80001FD95A /* SwiftyBeaconManger.swift */; };
+		4C14FF641A21CC80001FD95A /* SwiftyBeaconRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14FF611A21CC80001FD95A /* SwiftyBeaconRegion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,9 +39,9 @@
 		4C14FF4C1A21C831001FD95A /* SwiftyBeaconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyBeaconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C14FF511A21C831001FD95A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C14FF521A21C831001FD95A /* SwiftyBeaconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyBeaconTests.swift; sourceTree = "<group>"; };
-		4C14FF5F1A21CC80001FD95A /* BeaconExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconExtensions.swift; sourceTree = "<group>"; };
-		4C14FF601A21CC80001FD95A /* BeaconManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconManager.swift; sourceTree = "<group>"; };
-		4C14FF611A21CC80001FD95A /* BeaconRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconRegion.swift; sourceTree = "<group>"; };
+		4C14FF5F1A21CC80001FD95A /* SwiftyBeaconExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaconExtensions.swift; sourceTree = "<group>"; };
+		4C14FF601A21CC80001FD95A /* SwiftyBeaconManger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaconManger.swift; sourceTree = "<group>"; };
+		4C14FF611A21CC80001FD95A /* SwiftyBeaconRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaconRegion.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,9 +122,9 @@
 		4C14FF5E1A21CC80001FD95A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				4C14FF5F1A21CC80001FD95A /* BeaconExtensions.swift */,
-				4C14FF601A21CC80001FD95A /* BeaconManager.swift */,
-				4C14FF611A21CC80001FD95A /* BeaconRegion.swift */,
+				4C14FF5F1A21CC80001FD95A /* SwiftyBeaconExtensions.swift */,
+				4C14FF601A21CC80001FD95A /* SwiftyBeaconManger.swift */,
+				4C14FF611A21CC80001FD95A /* SwiftyBeaconRegion.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -230,9 +230,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C14FF3F1A21C831001FD95A /* ViewController.swift in Sources */,
-				4C14FF641A21CC80001FD95A /* BeaconRegion.swift in Sources */,
-				4C14FF631A21CC80001FD95A /* BeaconManager.swift in Sources */,
-				4C14FF621A21CC80001FD95A /* BeaconExtensions.swift in Sources */,
+				4C14FF641A21CC80001FD95A /* SwiftyBeaconRegion.swift in Sources */,
+				4C14FF631A21CC80001FD95A /* SwiftyBeaconManger.swift in Sources */,
+				4C14FF621A21CC80001FD95A /* SwiftyBeaconExtensions.swift in Sources */,
 				4C14FF3D1A21C831001FD95A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

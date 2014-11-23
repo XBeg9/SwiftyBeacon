@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .Authorized:
             return true
         case .NotDetermined:
-            BeaconManager.sharedInstance.locationManager.requestAlwaysAuthorization()
+            SwiftyBeaconManager.sharedInstance.locationManager.requestAlwaysAuthorization()
         case .AuthorizedWhenInUse, .Restricted, .Denied:
             let alertController = UIAlertController(
                 title: "Background Location Access Disabled",

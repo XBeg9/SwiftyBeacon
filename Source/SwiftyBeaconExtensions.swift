@@ -12,12 +12,12 @@ import CoreLocation
 extension CLRegionState {
     func toString() -> String {
         switch self {
-        case .Inside:
-            return "Inside"
-        case .Outside:
-            return "Outside"
-        case .Unknown:
-            return "Unknown"
+            case .Inside:
+                return "Inside"
+            case .Outside:
+                return "Outside"
+            case .Unknown:
+                return "Unknown"
         }
     }
 }

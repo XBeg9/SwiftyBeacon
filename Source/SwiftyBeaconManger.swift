@@ -12,16 +12,16 @@ import CoreBluetooth
 
 typealias tAutorizationStateHandler = (CLAuthorizationStatus!) -> Void
 
-let sharedBeaconManager = BeaconManager()
+let sharedBeaconManager = SwiftyBeaconManager()
 
-class BeaconManager: NSObject, CLLocationManagerDelegate, CBCentralManagerDelegate {
+class SwiftyBeaconManager: NSObject, CLLocationManagerDelegate, CBCentralManagerDelegate {
     let locationManager = CLLocationManager()
     let bluetoothManager: CBCentralManager!
     var authorizationStateHandler: tAutorizationStateHandler?
     
     private(set) lazy var regions: [CLBeaconRegion] = { return [CLBeaconRegion]() }()
     
-    class var sharedInstance:BeaconManager {
+    class var sharedInstance:SwiftyBeaconManager {
         return sharedBeaconManager
     }
     
@@ -30,13 +30,13 @@ class BeaconManager: NSObject, CLLocationManagerDelegate, CBCentralManagerDelega
         
         locationManager.delegate = self
         bluetoothManager = CBCentralManager(delegate: self, queue: dispatch_get_main_queue(), options: [CBCentralManagerOptionShowPowerAlertKey: true])
-        
+
         if NSBundle.mainBundle().objectForInfoDictionaryKey("NSLocationAlwaysUsageDescription") == nil {
             fatalError("Please add NSLocationAlwaysUsageDescription to your Info.plist file")
         }
     }
     
-    func startMonitoringRegion(region: BeaconRegion) {
+    func startMonitoringRegion(region: SwiftyBeaconRegion) {
         if find(regions, region) == nil {
             regions.append(region)
             locationManager.startMonitoringForRegion(region)
@@ -45,17 +45,17 @@ class BeaconManager: NSObject, CLLocationManagerDelegate, CBCentralManagerDelega
         }
     }
     
-    func stopMonitoringRegion(region: BeaconRegion) {
+    func stopMonitoringRegion(region: SwiftyBeaconRegion) {
         if let index = find(regions, region) {
             locationManager.stopMonitoringForRegion(region)
             regions.removeAtIndex(index)
         }
     }
     
-    func findBeaconRegion(region: CLRegion) -> BeaconRegion? {
+    func findBeaconRegion(region: CLRegion) -> SwiftyBeaconRegion? {
         for beaconRegion in regions {
-            if beaconRegion is BeaconRegion && equal(beaconRegion.identifier, region.identifier) {
-                return beaconRegion as? BeaconRegion
+            if beaconRegion is SwiftyBeaconRegion && equal(beaconRegion.identifier, region.identifier) {
+                return beaconRegion as? SwiftyBeaconRegion
             }
         }
         
