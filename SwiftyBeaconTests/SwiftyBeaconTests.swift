@@ -6,31 +6,19 @@
 //  Copyright (c) 2014 Skitsko. All rights reserved.
 //
 
-import UIKit
-import XCTest
+import Quick
+import Nimble
+import SwiftyBeacon
 
-class SwiftyBeaconTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
+class SwiftyBeaconRegionTests: QuickSpec {
+    override func spec() {
+        var region: SwiftyBeaconRegion?
+        beforeEach {
+            region = SwiftyBeaconRegion(proximityUUID: NSUUID(UUIDString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F"), identifier: "test_region")
+        }
+        
+        it("should init defaults") {
+            expect(region?.notifyEntryStateOnDisplay).to(beTruthy())
         }
     }
-    
 }

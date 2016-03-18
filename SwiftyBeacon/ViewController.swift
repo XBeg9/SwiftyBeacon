@@ -1,4 +1,4 @@
-//
+    //
 //  ViewController.swift
 //  iBeaconDemo
 //
@@ -11,13 +11,13 @@ import CoreLocation
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var numberLabel: UILabel!
-    @IBOutlet weak var minorLabel: UILabel!
+    @IBOutlet weak var numberLabel: UILabel?
+    @IBOutlet weak var minorLabel: UILabel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        numberLabel.text = "Unknown"
+        numberLabel?.text = "Unknown"
         
         //@TODO please check also if Bluetooth is enabled
 
@@ -32,19 +32,19 @@ class ViewController: UIViewController {
 
                     for beacon in sortedBeacons {
                         if beacon.proximity != .Unknown {
-                            self.minorLabel.text = "\(beacon.minor)\n \(beacon.rssi)db"
+                            self.minorLabel?.text = "\(beacon.minor)\n \(beacon.rssi)db"
                         }
                     }
                 }
                 
-                beaconRegion.stateHandler = { state in
-                    self.numberLabel.text = state.toString()
-                }
+//                beaconRegion.stateHandler = { state in
+//                    self.numberLabel?.text = state.toString()
+//                }
 
                 SwiftyBeaconManager.sharedInstance.startMonitoringRegion(beaconRegion)
             } else {
-                self.numberLabel.text = "Disabled"
-                self.minorLabel.text = ""
+                self.numberLabel?.text = "Disabled"
+                self.minorLabel?.text = ""
                 
                 self.view.backgroundColor = UIColor.redColor()
             }
