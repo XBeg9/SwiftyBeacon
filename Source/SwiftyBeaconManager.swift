@@ -207,7 +207,7 @@ extension SwiftyBeaconManager: CLLocationManagerDelegate {
         if let beaconRegion = findBeaconRegion(region) {
             logManager.info { "\(region)"}
             beaconRegion.rangeHandler?(beacons)
-        
+            handleBeaconsStatusChanges(beacons, forRegion: beaconRegion)
             logManager.info { "\(beacons)"}
         }
     }
@@ -215,6 +215,7 @@ extension SwiftyBeaconManager: CLLocationManagerDelegate {
     public func locationManager(manager: CLLocationManager, monitoringDidFailForRegion region: CLRegion?, withError error: NSError) {
         if let region = region as? CLBeaconRegion, beaconRegion = findBeaconRegion(region) {
             logManager.error { "\(beaconRegion): \(error)"}
+            print("[ERROR] monitoringDidFailForRegion \(beaconRegion): \(error)")
         }
     }
     
@@ -225,6 +226,26 @@ extension SwiftyBeaconManager: CLLocationManagerDelegate {
     }
 }
 
-
-
-
+extension SwiftyBeaconManager {
+    
+    private func handleBeaconsStatusChanges(beacons: [CLBeacon], forRegion region: SwiftyBeaconRegion) {
+        
+        if beacons.count == 0 && region.unrangeBeaconHandler == nil && region.rangeBeaconHandler == nil { return }
+        
+        let currentlyRangedBeacons = beacons
+        let handledBeacons = region.rangedBeacons
+        
+        let unrangedBeacons = handledBeacons.filter { !currentlyRangedBeacons.contains($0) }
+        let newRangedBeacons = currentlyRangedBeacons.filter { !handledBeacons.contains($0) }
+        
+        unrangedBeacons.forEach { (beacon) in
+            region.unrangeBeaconHandler?(beacon)
+        }
+        
+        newRangedBeacons.forEach { (beacon) in
+            region.rangeBeaconHandler?(beacon)
+        }
+        
+        region.rangedBeacons = beacons
+    }
+}
