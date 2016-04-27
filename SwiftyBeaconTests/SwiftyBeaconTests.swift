@@ -14,7 +14,7 @@ class SwiftyBeaconRegionTests: QuickSpec {
     override func spec() {
         var region: SwiftyBeaconRegion?
         beforeEach {
-            region = SwiftyBeaconRegion(proximityUUID: NSUUID(UUIDString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F"), identifier: "test_region")
+            region = SwiftyBeaconRegion(proximityUUID: NSUUID(UUIDString: "E621E1F8-C36C-495A-93FC-0C247A3E6E5F")!)
         }
         
         it("should init defaults") {
