@@ -234,8 +234,8 @@ extension SwiftyBeaconManager {
         let currentlyRangedBeacons = beacons
         let handledBeacons = region.rangedBeacons
         
-        let unrangedBeacons = handledBeacons.filter { !currentlyRangedBeacons.contains($0) }
-        let newRangedBeacons = currentlyRangedBeacons.filter { !handledBeacons.contains($0) }
+        let unrangedBeacons = handledBeacons.filter { !currentlyRangedBeacons.containsBeacon($0) }
+        let newRangedBeacons = currentlyRangedBeacons.filter { !handledBeacons.containsBeacon($0) }
         
         unrangedBeacons.forEach { (beacon) in
             logManager.info { "\nDid unrange beacon:\n\(beacon)" }
@@ -249,4 +249,16 @@ extension SwiftyBeaconManager {
         
         region.rangedBeacons = beacons
     }
+}
+
+extension Array where Element: CLBeacon {
+    
+    private func containsBeacon(beacon: CLBeacon) -> Bool {
+        return filter { $0 == beacon }.first != nil
+    }
+}
+
+func == (lhs: CLBeacon, rhs: CLBeacon) -> Bool {
+    
+    return lhs.proximityUUID == rhs.proximityUUID && lhs.major == rhs.major && lhs.minor == rhs.minor
 }
