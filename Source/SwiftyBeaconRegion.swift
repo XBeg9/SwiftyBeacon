@@ -34,12 +34,20 @@ public extension CLBeacon {
     }
 }
 
-public typealias RegionRangeHandler = ([CLBeacon]!) -> Void
-public typealias RegionStateHandler = (CLRegionState!) -> Void
+public typealias RegionRangeHandler = ([CLBeacon]) -> Void
+public typealias RegionStateHandler = (CLRegionState) -> Void
+
+public typealias BeaconHandler = (CLBeacon) -> Void
 
 public class SwiftyBeaconRegion: CLBeaconRegion {
+    
     public var rangeHandler: RegionRangeHandler?
     public var stateHandler: RegionStateHandler?
+    
+    public var rangeBeaconHandler: BeaconHandler?
+    public var unrangeBeaconHandler: BeaconHandler?
+    
+    public private (set) var rangedBeacons = [CLBeacon]()
     
     public override var description: String {
         return "\(proximityUUID.UUIDString)-\(major)-\(minor)"
