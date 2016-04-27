@@ -60,7 +60,7 @@ public class SwiftyBeaconManager: NSObject {
             }
         }
     }
-
+    
     // MARK: - Public methods
     
     public func startMonitoringRegion(region: SwiftyBeaconRegion) throws {
@@ -119,7 +119,7 @@ public class SwiftyBeaconManager: NSObject {
             regions.remove(region)
         }
     }
-   
+    
     // MARK: - Private methods
     
     private func findBeaconRegion(region: CLRegion) -> SwiftyBeaconRegion? {
@@ -170,7 +170,7 @@ extension SwiftyBeaconManager: CLLocationManagerDelegate {
     public func locationManager(manager: CLLocationManager, didStartMonitoringForRegion region: CLRegion) {
         if let beaconRegion = findBeaconRegion(region) {
             logManager.debug { "\(beaconRegion)"}
-        
+            
             locationManager.requestStateForRegion(beaconRegion)
         }
     }
@@ -191,31 +191,30 @@ extension SwiftyBeaconManager: CLLocationManagerDelegate {
         if let beaconRegion = findBeaconRegion(region) {
             logManager.debug { "\(state): \(region)"}
             switch state {
-                case .Inside:
-                    locationManager.startRangingBeaconsInRegion(beaconRegion)
-                    beaconRegion.stateHandler?(.Inside)
-                case .Outside:
-                    locationManager.stopRangingBeaconsInRegion(beaconRegion)
-                    beaconRegion.stateHandler?(.Outside)
-                case .Unknown:
-                    beaconRegion.stateHandler?(.Unknown)
+            case .Inside:
+                locationManager.startRangingBeaconsInRegion(beaconRegion)
+                beaconRegion.stateHandler?(.Inside)
+            case .Outside:
+                locationManager.stopRangingBeaconsInRegion(beaconRegion)
+                beaconRegion.stateHandler?(.Outside)
+            case .Unknown:
+                beaconRegion.stateHandler?(.Unknown)
             }
         }
     }
     
     public func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
         if let beaconRegion = findBeaconRegion(region) {
-            logManager.info { "\(region)"}
+            logManager.verbose { "\(region)"}
             beaconRegion.rangeHandler?(beacons)
             handleBeaconsStatusChanges(beacons, forRegion: beaconRegion)
-            logManager.info { "\(beacons)"}
+            logManager.verbose { "\(beacons)"}
         }
     }
     
     public func locationManager(manager: CLLocationManager, monitoringDidFailForRegion region: CLRegion?, withError error: NSError) {
         if let region = region as? CLBeaconRegion, beaconRegion = findBeaconRegion(region) {
             logManager.error { "\(beaconRegion): \(error)"}
-            print("[ERROR] monitoringDidFailForRegion \(beaconRegion): \(error)")
         }
     }
     
@@ -239,10 +238,12 @@ extension SwiftyBeaconManager {
         let newRangedBeacons = currentlyRangedBeacons.filter { !handledBeacons.contains($0) }
         
         unrangedBeacons.forEach { (beacon) in
+            logManager.info { "\nDid unrange beacon:\n\(beacon)" }
             region.unrangeBeaconHandler?(beacon)
         }
         
         newRangedBeacons.forEach { (beacon) in
+            logManager.info { "\nDid range beacon:\n\(beacon)" }
             region.rangeBeaconHandler?(beacon)
         }
         
