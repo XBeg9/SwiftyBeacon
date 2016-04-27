@@ -47,7 +47,7 @@ public class SwiftyBeaconRegion: CLBeaconRegion {
     public var rangeBeaconHandler: BeaconHandler?
     public var unrangeBeaconHandler: BeaconHandler?
     
-    public private (set) var rangedBeacons = [CLBeacon]()
+    public internal (set) var rangedBeacons = [CLBeacon]()
     
     public override var description: String {
         return "\(proximityUUID.UUIDString)-\(major)-\(minor)"
