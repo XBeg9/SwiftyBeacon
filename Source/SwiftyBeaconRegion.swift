@@ -37,7 +37,7 @@ public extension CLBeacon {
 public typealias RegionRangeHandler = ([CLBeacon]!) -> Void
 public typealias RegionStateHandler = (CLRegionState!) -> Void
 
-public class SwiftyBeaconRegion: CLBeaconRegion, CustomDebugStringConvertible {
+public class SwiftyBeaconRegion: CLBeaconRegion {
     public var rangeHandler: RegionRangeHandler?
     public var stateHandler: RegionStateHandler?
     
