@@ -1,6 +1,6 @@
 //
-//  Logger.swift
-//  SwiftyBeacon
+//  SwiftyBeaconLog.swift
+//  SwiftyBeaconLog
 //
 //  Created by Dmitry Lavlinskyy on 4/27/16.
 //  Copyright © 2016 Skitsko. All rights reserved.
