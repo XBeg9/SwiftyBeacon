@@ -107,3 +107,5 @@ crashlytics-build.properties
 *.cer
 fastlane/report.xml
 fastlane/Appfile
+
+.DS_Store
