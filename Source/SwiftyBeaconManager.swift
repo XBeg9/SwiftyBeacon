@@ -36,12 +36,18 @@ public class SwiftyBeaconManager: NSObject {
         return CBCentralManager(delegate: self, queue: dispatch_get_main_queue(), options: [CBCentralManagerOptionShowPowerAlertKey: true])
     }()
     
-    private var hasAskedToSwitchOnBluetooth = false
+    public private(set) var regions = Set<SwiftyBeaconRegion>()
+    
+    public var logger: Logger? {
+        set { logManager.logger = newValue }
+        get { return logManager.logger }
+    }
     
     public var authorizationStateHandler: BeaconManagerAutorizationStateHandler?
     public var bluetoothStateHandler: BeaconManagerBluetoothStateHandler?
     
-    private(set) var regions = Set<SwiftyBeaconRegion>()
+    private var hasAskedToSwitchOnBluetooth = false
+    private var logManager = SwiftyBeaconLogManager()
     
     // MARK: - Init
     
@@ -163,7 +169,7 @@ extension SwiftyBeaconManager: CLLocationManagerDelegate {
     
     public func locationManager(manager: CLLocationManager, didStartMonitoringForRegion region: CLRegion) {
         if let beaconRegion = findBeaconRegion(region) {
-            print("didStartMonitoringForRegion \(beaconRegion)")
+            logManager.debug { "\(beaconRegion)"}
         
             locationManager.requestStateForRegion(beaconRegion)
         }
@@ -171,29 +177,27 @@ extension SwiftyBeaconManager: CLLocationManagerDelegate {
     
     public func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
         if let beaconRegion = findBeaconRegion(region) {
-            print("didEnterRegion \(beaconRegion)")
+            logManager.debug { "\(beaconRegion)"}
         }
     }
     
     public func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
         if let beaconRegion = findBeaconRegion(region) {
-            print("didExitRegion \(beaconRegion)")
+            logManager.debug { "\(beaconRegion)"}
         }
     }
     
     public func locationManager(manager: CLLocationManager, didDetermineState state: CLRegionState, forRegion region: CLRegion) {
         if let beaconRegion = findBeaconRegion(region) {
+            logManager.debug { "\(state): \(region)"}
             switch state {
                 case .Inside:
-                    print("Inside \(region)")
                     locationManager.startRangingBeaconsInRegion(beaconRegion)
                     beaconRegion.stateHandler?(.Inside)
                 case .Outside:
-                    print("Outside \(region)")
                     locationManager.stopRangingBeaconsInRegion(beaconRegion)
                     beaconRegion.stateHandler?(.Outside)
                 case .Unknown:
-                    print("Unknown \(region)")
                     beaconRegion.stateHandler?(.Unknown)
             }
         }
@@ -201,22 +205,26 @@ extension SwiftyBeaconManager: CLLocationManagerDelegate {
     
     public func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
         if let beaconRegion = findBeaconRegion(region) {
-            print("[INFO] didRangeBeacons region: \(region)")
+            logManager.info { "\(region)"}
             beaconRegion.rangeHandler?(beacons)
         
-            print("Beacons: \(beacons)")
+            logManager.info { "\(beacons)"}
         }
     }
     
     public func locationManager(manager: CLLocationManager, monitoringDidFailForRegion region: CLRegion?, withError error: NSError) {
         if let region = region as? CLBeaconRegion, beaconRegion = findBeaconRegion(region) {
-            print("[ERROR] monitoringDidFailForRegion \(beaconRegion): \(error)")
+            logManager.error { "\(beaconRegion): \(error)"}
         }
     }
     
     public func locationManager(manager: CLLocationManager, rangingBeaconsDidFailForRegion region: CLBeaconRegion, withError error: NSError) {
         if let beaconRegion = findBeaconRegion(region) {
-            print("[ERROR] rangingBeaconsDidFailForRegion \(beaconRegion): \(error)")
+            logManager.error { "\(beaconRegion): \(error)"}
         }
     }
 }
+
+
+
+

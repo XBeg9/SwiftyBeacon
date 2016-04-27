@@ -17,14 +17,14 @@ class SwiftyBeaconManagerTests: QuickSpec {
             manager = SwiftyBeaconManager()
         }
         
-        it("should init location manager delegate") {
-            expect(manager?.locationManager.delegate).notTo(beNil())
-        }
-        
-        it("should init bluetooth manager delegate") {
-            expect(manager?.bluetoothManager.delegate).notTo(beNil())
-        }
-        
+//        it("should init location manager delegate") {
+//            expect(manager?.locationManager.delegate).notTo(beNil())
+//        }
+//        
+//        it("should init bluetooth manager delegate") {
+//            expect(manager?.bluetoothManager.delegate).notTo(beNil())
+//        }
+//        
         it("") {
             
         }
