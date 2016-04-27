@@ -14,19 +14,19 @@ class SwiftyBeaconManagerTests: QuickSpec {
     override func spec() {
         var manager: SwiftyBeaconManager?
         beforeEach {
-            manager = SwiftyBeaconManager.sharedInstance
+            manager = SwiftyBeaconManager()
         }
         
         it("should init location manager delegate") {
             expect(manager?.locationManager.delegate).notTo(beNil())
         }
         
-        it("should init bluetooth manager delegate", {
+        it("should init bluetooth manager delegate") {
             expect(manager?.bluetoothManager.delegate).notTo(beNil())
-        })
+        }
         
-        it("", {
+        it("") {
             
-        })
+        }
     }
 }
