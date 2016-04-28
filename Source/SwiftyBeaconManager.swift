@@ -38,7 +38,7 @@ public class SwiftyBeaconManager: NSObject {
     
     public private(set) var regions = Set<SwiftyBeaconRegion>()
     
-    public var logger: Logger? {
+    public var logger: SwiftyBeaconLogger? {
         set { logManager.logger = newValue }
         get { return logManager.logger }
     }

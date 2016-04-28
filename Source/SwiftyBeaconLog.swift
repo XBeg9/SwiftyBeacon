@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol Logger {
+public protocol SwiftyBeaconLogger {
     
     func verbose(functionName: String, fileName: String, lineNumber: Int, @noescape closure: () -> String?)
     func debug(functionName: String, fileName: String, lineNumber: Int, @noescape closure: () -> String?)
@@ -20,7 +20,7 @@ public protocol Logger {
 
 internal class SwiftyBeaconLogManager {
     
-    var logger: Logger?
+    var logger: SwiftyBeaconLogger?
     
     func verbose(functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, @noescape closure: () -> String?) {
 
