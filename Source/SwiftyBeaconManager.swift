@@ -229,7 +229,10 @@ extension SwiftyBeaconManager {
     
     private func handleBeaconsStatusChanges(beacons: [CLBeacon], forRegion region: SwiftyBeaconRegion) {
         
-        if beacons.count == 0 && region.unrangeBeaconHandler == nil && region.rangeBeaconHandler == nil { return }
+        if region.rangedBeacons.count == 0
+            && beacons.count == 0
+            && region.unrangeBeaconHandler == nil
+            && region.rangeBeaconHandler == nil { return }
         
         let currentlyRangedBeacons = beacons
         let handledBeacons = region.rangedBeacons
