@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SwiftyBeacon"
-  s.version      = "0.0.5"
+  s.version      = "0.0.6"
   s.license      = "MIT"
   s.summary      = "SwiftyBeacon is an iBeacon manager which will save you time."
   s.homepage     = "https://github.com/XBeg9/SwiftyBeacon"
