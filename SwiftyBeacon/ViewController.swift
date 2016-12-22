@@ -24,16 +24,16 @@ class ViewController: UIViewController {
         //@TODO please check also if Bluetooth is enabled
 
         beaconManager.authorizationStateHandler = { state in
-            if state == .AuthorizedAlways || state == .AuthorizedWhenInUse {
-                self.view.backgroundColor = UIColor.greenColor()
+            if state == .authorizedAlways || state == .authorizedWhenInUse {
+                self.view.backgroundColor = UIColor.green
                 
-                let beaconRegion = SwiftyBeaconRegion(proximityUUID: NSUUID(UUIDString: "F7826DA6-4FA2-4E98-8024-BC5B71E0893E")!, major: CLBeaconMajorValue(5555))
+                let beaconRegion = SwiftyBeaconRegion(proximityUUID: UUID(uuidString: "F7826DA6-4FA2-4E98-8024-BC5B71E0893E")!, major: CLBeaconMajorValue(5555))
                 
                 beaconRegion.rangeHandler = { beacons in
-                    let sortedBeacons = beacons.sort { $0.rssi > $1.rssi }.reverse() as [CLBeacon!]
+                    let sortedBeacons = beacons.sorted { $0.rssi > $1.rssi }.reversed()
 
                     for beacon in sortedBeacons {
-                        if beacon.proximity != .Unknown {
+                        if beacon.proximity != .unknown {
                             self.minorLabel?.text = "\(beacon.minor)\n \(beacon.rssi)db"
                         }
                     }
@@ -48,7 +48,7 @@ class ViewController: UIViewController {
                 self.numberLabel?.text = "Disabled"
                 self.minorLabel?.text = ""
                 
-                self.view.backgroundColor = UIColor.redColor()
+                self.view.backgroundColor = UIColor.red
             }
         }
     }

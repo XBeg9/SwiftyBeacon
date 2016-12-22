@@ -16,7 +16,7 @@
 		4C14FF641A21CC80001FD95A /* SwiftyBeaconRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14FF611A21CC80001FD95A /* SwiftyBeaconRegion.swift */; };
 		4C9463EE1A248E1800AF440D /* SwiftyBeaconRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14FF611A21CC80001FD95A /* SwiftyBeaconRegion.swift */; };
 		4C9463F01A24906C00AF440D /* SwiftyBeaconManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9463EF1A24906C00AF440D /* SwiftyBeaconManagerTests.swift */; };
-		F2A73F2AA3883B83A336D899 /* Pods_SwiftyBeaconTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3E3037782C420A0B6C6014A /* Pods_SwiftyBeaconTests.framework */; };
+		6DD16ACD13F402DDBAF39CA7 /* Pods_SwiftyBeaconTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C04009E14D32156C6E540792 /* Pods_SwiftyBeaconTests.framework */; };
 		F2E7B0D31CD11CC50046304F /* SwiftyBeaconLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7B0D21CD11CC50046304F /* SwiftyBeaconLog.swift */; };
 		F2E7B0D51CD1257D0046304F /* SwiftyBeaconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E7B0D41CD1257D0046304F /* SwiftyBeaconManager.swift */; };
 /* End PBXBuildFile section */
@@ -44,11 +44,11 @@
 		4C14FF521A21C831001FD95A /* SwiftyBeaconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyBeaconTests.swift; sourceTree = "<group>"; };
 		4C14FF611A21CC80001FD95A /* SwiftyBeaconRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaconRegion.swift; sourceTree = "<group>"; };
 		4C9463EF1A24906C00AF440D /* SwiftyBeaconManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaconManagerTests.swift; sourceTree = "<group>"; };
-		897FA70D97F47B27159744F4 /* Pods-SwiftyBeaconTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyBeaconTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyBeaconTests/Pods-SwiftyBeaconTests.debug.xcconfig"; sourceTree = "<group>"; };
-		EAE77929A847A934C03E67EB /* Pods-SwiftyBeaconTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyBeaconTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyBeaconTests/Pods-SwiftyBeaconTests.release.xcconfig"; sourceTree = "<group>"; };
+		7C21979E15065960FE21F284 /* Pods-SwiftyBeaconTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyBeaconTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyBeaconTests/Pods-SwiftyBeaconTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8CA019179324C1CA3A70EBCE /* Pods-SwiftyBeaconTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyBeaconTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyBeaconTests/Pods-SwiftyBeaconTests.release.xcconfig"; sourceTree = "<group>"; };
+		C04009E14D32156C6E540792 /* Pods_SwiftyBeaconTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyBeaconTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2E7B0D21CD11CC50046304F /* SwiftyBeaconLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaconLog.swift; sourceTree = "<group>"; };
 		F2E7B0D41CD1257D0046304F /* SwiftyBeaconManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBeaconManager.swift; sourceTree = "<group>"; };
-		F3E3037782C420A0B6C6014A /* Pods_SwiftyBeaconTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyBeaconTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,30 +63,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2A73F2AA3883B83A336D899 /* Pods_SwiftyBeaconTests.framework in Frameworks */,
+				6DD16ACD13F402DDBAF39CA7 /* Pods_SwiftyBeaconTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		233BEDF2AA6481586CE69F6A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				897FA70D97F47B27159744F4 /* Pods-SwiftyBeaconTests.debug.xcconfig */,
-				EAE77929A847A934C03E67EB /* Pods-SwiftyBeaconTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		23C291B803634A6FB4181BA9 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				F3E3037782C420A0B6C6014A /* Pods_SwiftyBeaconTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		4C14FF2E1A21C831001FD95A = {
 			isa = PBXGroup;
 			children = (
@@ -94,8 +77,8 @@
 				4C14FF391A21C831001FD95A /* SwiftyBeacon */,
 				4C14FF4F1A21C831001FD95A /* SwiftyBeaconTests */,
 				4C14FF381A21C831001FD95A /* Products */,
-				23C291B803634A6FB4181BA9 /* Frameworks */,
-				233BEDF2AA6481586CE69F6A /* Pods */,
+				ECC4215B7255E411C6EF64CF /* Pods */,
+				97F2888A0A755A2FD3357109 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -157,6 +140,23 @@
 			path = Source;
 			sourceTree = "<group>";
 		};
+		97F2888A0A755A2FD3357109 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C04009E14D32156C6E540792 /* Pods_SwiftyBeaconTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ECC4215B7255E411C6EF64CF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7C21979E15065960FE21F284 /* Pods-SwiftyBeaconTests.debug.xcconfig */,
+				8CA019179324C1CA3A70EBCE /* Pods-SwiftyBeaconTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -181,12 +181,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4C14FF591A21C831001FD95A /* Build configuration list for PBXNativeTarget "SwiftyBeaconTests" */;
 			buildPhases = (
-				5BC9441F3EA3FE0CFB8157BF /* Check Pods Manifest.lock */,
+				27ABCDAA618A9B626F6CEBEC /* [CP] Check Pods Manifest.lock */,
 				4C14FF481A21C831001FD95A /* Sources */,
 				4C14FF491A21C831001FD95A /* Frameworks */,
 				4C14FF4A1A21C831001FD95A /* Resources */,
-				D04EC795A2EC9D8CC130ABA5 /* Copy Pods Resources */,
-				B8E2207CE82A362E90319EB7 /* Embed Pods Frameworks */,
+				3F74C22462A7ED231E843199 /* [CP] Embed Pods Frameworks */,
+				4B79449BCF5574784E28E532 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -211,9 +211,11 @@
 				TargetAttributes = {
 					4C14FF361A21C831001FD95A = {
 						CreatedOnToolsVersion = 6.1;
+						LastSwiftMigration = 0820;
 					};
 					4C14FF4B1A21C831001FD95A = {
 						CreatedOnToolsVersion = 6.1;
+						LastSwiftMigration = 0820;
 						TestTargetID = 4C14FF361A21C831001FD95A;
 					};
 				};
@@ -258,29 +260,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5BC9441F3EA3FE0CFB8157BF /* Check Pods Manifest.lock */ = {
+		27ABCDAA618A9B626F6CEBEC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		B8E2207CE82A362E90319EB7 /* Embed Pods Frameworks */ = {
+		3F74C22462A7ED231E843199 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,14 +290,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyBeaconTests/Pods-SwiftyBeaconTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D04EC795A2EC9D8CC130ABA5 /* Copy Pods Resources */ = {
+		4B79449BCF5574784E28E532 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -444,6 +446,7 @@
 				INFOPLIST_FILE = SwiftyBeacon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -454,12 +457,13 @@
 				INFOPLIST_FILE = SwiftyBeacon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
 		4C14FF5A1A21C831001FD95A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 897FA70D97F47B27159744F4 /* Pods-SwiftyBeaconTests.debug.xcconfig */;
+			baseConfigurationReference = 7C21979E15065960FE21F284 /* Pods-SwiftyBeaconTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -473,13 +477,14 @@
 				INFOPLIST_FILE = SwiftyBeaconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftyBeacon.app/SwiftyBeacon";
 			};
 			name = Debug;
 		};
 		4C14FF5B1A21C831001FD95A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EAE77929A847A934C03E67EB /* Pods-SwiftyBeaconTests.release.xcconfig */;
+			baseConfigurationReference = 8CA019179324C1CA3A70EBCE /* Pods-SwiftyBeaconTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -489,6 +494,7 @@
 				INFOPLIST_FILE = SwiftyBeaconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftyBeacon.app/SwiftyBeacon";
 			};
 			name = Release;

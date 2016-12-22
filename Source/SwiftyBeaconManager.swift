@@ -11,11 +11,11 @@ import UIKit
 import CoreLocation
 import CoreBluetooth
 
-public enum SwiftyBeaconError: ErrorType {
-    case MonitoringUnavailable
-    case LocationServiceUnathorized
-    case LocationServiceDisabled
-    case BluetoothPoweredOff
+public enum SwiftyBeaconError: Error {
+    case monitoringUnavailable
+    case locationServiceUnathorized
+    case locationServiceDisabled
+    case bluetoothPoweredOff
 }
 
 public let SwiftyBeaconManagerDomain = "com.swiftybeaconmanager"
@@ -23,7 +23,7 @@ public let SwiftyBeaconManagerDomain = "com.swiftybeaconmanager"
 public typealias BeaconManagerAutorizationStateHandler = (CLAuthorizationStatus) -> Void
 public typealias BeaconManagerBluetoothStateHandler = (CBCentralManagerState) -> Void
 
-public class SwiftyBeaconManager: NSObject {
+open class SwiftyBeaconManager: NSObject {
     // MARK: - Properties
     
     lazy var locationManager: CLLocationManager = {
@@ -33,29 +33,29 @@ public class SwiftyBeaconManager: NSObject {
     }()
     
     lazy var bluetoothManager: CBCentralManager = {
-        return CBCentralManager(delegate: self, queue: dispatch_get_main_queue(), options: [CBCentralManagerOptionShowPowerAlertKey: true])
+        return CBCentralManager(delegate: self, queue: DispatchQueue.main, options: [CBCentralManagerOptionShowPowerAlertKey: true])
     }()
     
-    public private(set) var regions = Set<SwiftyBeaconRegion>()
+    open fileprivate(set) var regions = Set<SwiftyBeaconRegion>()
     
-    public var logger: SwiftyBeaconLogger? {
+    open var logger: SwiftyBeaconLogger? {
         set { logManager.logger = newValue }
         get { return logManager.logger }
     }
     
-    public var authorizationStateHandler: BeaconManagerAutorizationStateHandler?
-    public var bluetoothStateHandler: BeaconManagerBluetoothStateHandler?
+    open var authorizationStateHandler: BeaconManagerAutorizationStateHandler?
+    open var bluetoothStateHandler: BeaconManagerBluetoothStateHandler?
     
-    private var hasAskedToSwitchOnBluetooth = false
-    private var logManager = SwiftyBeaconLogManager()
+    fileprivate var hasAskedToSwitchOnBluetooth = false
+    fileprivate var logManager = SwiftyBeaconLogManager()
     
     // MARK: - Init
     
     override public init() {
         super.init()
         
-        if NSBundle.mainBundle().objectForInfoDictionaryKey("NSLocationWhenInUseUsageDescription") == nil { //check NSLocationWhenInUseUsageDescription
-            if NSBundle.mainBundle().objectForInfoDictionaryKey("NSLocationAlwaysUsageDescription") == nil { //if NSLocationAlwaysUsageDescription also nil, then drop fatalError
+        if Bundle.main.object(forInfoDictionaryKey: "NSLocationWhenInUseUsageDescription") == nil { //check NSLocationWhenInUseUsageDescription
+            if Bundle.main.object(forInfoDictionaryKey: "NSLocationAlwaysUsageDescription") == nil { //if NSLocationAlwaysUsageDescription also nil, then drop fatalError
                 fatalError("Please add NSLocationAlwaysUsageDescription OR NSLocationWhenInUseUsageDescription to your Info.plist file")
             }
         }
@@ -63,66 +63,66 @@ public class SwiftyBeaconManager: NSObject {
     
     // MARK: - Public methods
     
-    public func startMonitoringRegion(region: SwiftyBeaconRegion) throws {
-        if !CLLocationManager.locationServicesEnabled() || CLLocationManager.authorizationStatus() == .NotDetermined {
+    open func startMonitoringRegion(_ region: SwiftyBeaconRegion) throws {
+        if !CLLocationManager.locationServicesEnabled() || CLLocationManager.authorizationStatus() == .notDetermined {
             locationManager.requestAlwaysAuthorization()
             return
         }
         
-        if !CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
-            throw SwiftyBeaconError.MonitoringUnavailable
+        if !CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
+            throw SwiftyBeaconError.monitoringUnavailable
         }
         
         if CLLocationManager.locationServicesEnabled() {
-            if CLLocationManager.authorizationStatus() != .AuthorizedAlways {
-                throw SwiftyBeaconError.LocationServiceUnathorized
+            if CLLocationManager.authorizationStatus() != .authorizedAlways {
+                throw SwiftyBeaconError.locationServiceUnathorized
             }
         } else {
-            throw SwiftyBeaconError.LocationServiceDisabled
+            throw SwiftyBeaconError.locationServiceDisabled
         }
         
-        if bluetoothManager.state != .PoweredOn {
+        if bluetoothManager.state != .poweredOn {
             if hasAskedToSwitchOnBluetooth {
-                throw SwiftyBeaconError.BluetoothPoweredOff
+                throw SwiftyBeaconError.bluetoothPoweredOff
             } else {
-                bluetoothManager.scanForPeripheralsWithServices(nil, options: nil)
+                bluetoothManager.scanForPeripherals(withServices: nil, options: nil)
                 
-                let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
-                dispatch_after(delayTime, dispatch_get_main_queue()) {
+                let delayTime = DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                DispatchQueue.main.asyncAfter(deadline: delayTime) {
                     self.hasAskedToSwitchOnBluetooth = true
                 }
             }
             return
         }
         
-        if let index = regions.indexOf(region) {
+        if let index = regions.index(of: region) {
             let oldRegion = regions[index]
             oldRegion.stateHandler = region.stateHandler
             oldRegion.rangeHandler = region.rangeHandler
-            locationManager.requestStateForRegion(region)
+            locationManager.requestState(for: region)
         } else {
             regions.insert(region)
-            locationManager.startMonitoringForRegion(region)
+            locationManager.startMonitoring(for: region)
         }
     }
     
-    public func stopMonitoringRegion(region: SwiftyBeaconRegion) {
+    open func stopMonitoringRegion(_ region: SwiftyBeaconRegion) {
         if regions.contains(region) {
-            locationManager.stopMonitoringForRegion(region)
+            locationManager.stopMonitoring(for: region)
             regions.remove(region)
         }
     }
     
-    public func stopMonitoringRegions() {
+    open func stopMonitoringRegions() {
         for region in regions {
-            locationManager.stopMonitoringForRegion(region)
+            locationManager.stopMonitoring(for: region)
             regions.remove(region)
         }
     }
     
     // MARK: - Private methods
     
-    private func findBeaconRegion(region: CLRegion) -> SwiftyBeaconRegion? {
+    fileprivate func findBeaconRegion(_ region: CLRegion) -> SwiftyBeaconRegion? {
         for beaconRegion in regions {
             if beaconRegion.identifier == region.identifier {
                 return beaconRegion
@@ -137,19 +137,19 @@ public class SwiftyBeaconManager: NSObject {
 
 extension SwiftyBeaconManager: CBCentralManagerDelegate {
     
-    public func centralManagerDidUpdateState(central: CBCentralManager) {
+    public func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch bluetoothManager.state {
-        case .PoweredOn:
+        case .poweredOn:
             for region in regions {
-                locationManager.requestStateForRegion(region)
+                locationManager.requestState(for: region)
             }
         default:
             for region in regions {
-                locationManager.stopRangingBeaconsInRegion(region)
+                locationManager.stopRangingBeacons(in: region)
             }
         }
         
-        bluetoothStateHandler?(bluetoothManager.state)
+        bluetoothStateHandler?(CBCentralManagerState(rawValue: bluetoothManager.state.rawValue)!)
     }
 }
 
@@ -157,53 +157,53 @@ extension SwiftyBeaconManager: CBCentralManagerDelegate {
 
 extension SwiftyBeaconManager: CLLocationManagerDelegate {
     
-    public func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .AuthorizedAlways {
+    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedAlways {
             for region in regions {
-                locationManager.requestStateForRegion(region)
+                locationManager.requestState(for: region)
             }
         }
         
         authorizationStateHandler?(status)
     }
     
-    public func locationManager(manager: CLLocationManager, didStartMonitoringForRegion region: CLRegion) {
+    public func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
         if let beaconRegion = findBeaconRegion(region) {
             logManager.debug { "\(beaconRegion)"}
             
-            locationManager.requestStateForRegion(beaconRegion)
+            locationManager.requestState(for: beaconRegion)
         }
     }
     
-    public func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
+    public func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         if let beaconRegion = findBeaconRegion(region) {
             logManager.debug { "\(beaconRegion)"}
         }
     }
     
-    public func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
+    public func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         if let beaconRegion = findBeaconRegion(region) {
             logManager.debug { "\(beaconRegion)"}
         }
     }
     
-    public func locationManager(manager: CLLocationManager, didDetermineState state: CLRegionState, forRegion region: CLRegion) {
+    public func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
         if let beaconRegion = findBeaconRegion(region) {
             logManager.debug { "\(state): \(region)"}
             switch state {
-            case .Inside:
-                locationManager.startRangingBeaconsInRegion(beaconRegion)
-                beaconRegion.stateHandler?(.Inside)
-            case .Outside:
-                locationManager.stopRangingBeaconsInRegion(beaconRegion)
-                beaconRegion.stateHandler?(.Outside)
-            case .Unknown:
-                beaconRegion.stateHandler?(.Unknown)
+            case .inside:
+                locationManager.startRangingBeacons(in: beaconRegion)
+                beaconRegion.stateHandler?(.inside)
+            case .outside:
+                locationManager.stopRangingBeacons(in: beaconRegion)
+                beaconRegion.stateHandler?(.outside)
+            case .unknown:
+                beaconRegion.stateHandler?(.unknown)
             }
         }
     }
     
-    public func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
+    public func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         if let beaconRegion = findBeaconRegion(region) {
             logManager.verbose { "\(region)"}
             beaconRegion.rangeHandler?(beacons)
@@ -212,13 +212,13 @@ extension SwiftyBeaconManager: CLLocationManagerDelegate {
         }
     }
     
-    public func locationManager(manager: CLLocationManager, monitoringDidFailForRegion region: CLRegion?, withError error: NSError) {
-        if let region = region as? CLBeaconRegion, beaconRegion = findBeaconRegion(region) {
+    public func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
+        if let region = region as? CLBeaconRegion, let beaconRegion = findBeaconRegion(region) {
             logManager.error { "\(beaconRegion): \(error)"}
         }
     }
     
-    public func locationManager(manager: CLLocationManager, rangingBeaconsDidFailForRegion region: CLBeaconRegion, withError error: NSError) {
+    public func locationManager(_ manager: CLLocationManager, rangingBeaconsDidFailFor region: CLBeaconRegion, withError error: Error) {
         if let beaconRegion = findBeaconRegion(region) {
             logManager.error { "\(beaconRegion): \(error)"}
         }
@@ -227,7 +227,7 @@ extension SwiftyBeaconManager: CLLocationManagerDelegate {
 
 extension SwiftyBeaconManager {
     
-    private func handleBeaconsStatusChanges(beacons: [CLBeacon], forRegion region: SwiftyBeaconRegion) {
+    fileprivate func handleBeaconsStatusChanges(_ beacons: [CLBeacon], forRegion region: SwiftyBeaconRegion) {
         
         if region.rangedBeacons.count == 0
             && beacons.count == 0
@@ -256,7 +256,7 @@ extension SwiftyBeaconManager {
 
 extension Array where Element: CLBeacon {
     
-    private func containsBeacon(beacon: CLBeacon) -> Bool {
+    fileprivate func containsBeacon(_ beacon: CLBeacon) -> Bool {
         return filter { $0 == beacon }.first != nil
     }
 }
