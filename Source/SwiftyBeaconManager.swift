@@ -87,7 +87,7 @@ open class SwiftyBeaconManager: NSObject {
             } else {
                 bluetoothManager.scanForPeripherals(withServices: nil, options: nil)
                 
-                let delayTime = DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                let delayTime = DispatchTime.now() + 1
                 DispatchQueue.main.asyncAfter(deadline: delayTime) {
                     self.hasAskedToSwitchOnBluetooth = true
                 }

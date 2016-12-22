@@ -23,13 +23,13 @@ public extension CLRegionState {
 }
 
 public extension CLBeaconRegion {
-    static func identifier(proximityUUID proximityUUID: UUID, major: CLBeaconMajorValue, minor: CLBeaconMinorValue) -> String {
+    static func identifier(proximityUUID: UUID, major: CLBeaconMajorValue, minor: CLBeaconMinorValue) -> String {
         return "\(proximityUUID.uuidString)_\(major)_\(minor)"
     }
 }
 
 public extension CLBeacon {
-    static func identifier(proximityUUID proximityUUID: UUID, major: CLBeaconMajorValue, minor: CLBeaconMinorValue) -> String {
+    static func identifier(proximityUUID: UUID, major: CLBeaconMajorValue, minor: CLBeaconMinorValue) -> String {
         return "\(proximityUUID.uuidString)_\(major)_\(minor)"
     }
 }
@@ -39,35 +39,35 @@ public typealias RegionStateHandler = (CLRegionState) -> Void
 
 public typealias BeaconHandler = (CLBeacon) -> Void
 
-public class SwiftyBeaconRegion: CLBeaconRegion {
+open class SwiftyBeaconRegion: CLBeaconRegion {
     
-    public var rangeHandler: RegionRangeHandler?
-    public var stateHandler: RegionStateHandler?
+    open var rangeHandler: RegionRangeHandler?
+    open var stateHandler: RegionStateHandler?
     
-    public var rangeBeaconHandler: BeaconHandler?
-    public var unrangeBeaconHandler: BeaconHandler?
+    open var rangeBeaconHandler: BeaconHandler?
+    open var unrangeBeaconHandler: BeaconHandler?
     
-    public internal (set) var rangedBeacons = [CLBeacon]()
+    open internal (set) var rangedBeacons = [CLBeacon]()
     
-    public override var description: String {
+    open override var description: String {
         return "\(proximityUUID.uuidString)-\(major)-\(minor)"
     }
     
-    public override var debugDescription: String {
+    open override var debugDescription: String {
         return description
     }
     
-    override private init(proximityUUID: UUID, identifier: String) {
+    override fileprivate init(proximityUUID: UUID, identifier: String) {
         super.init(proximityUUID: proximityUUID, identifier: identifier)
         defaultValues()
     }
     
-    override private init(proximityUUID: UUID, major: CLBeaconMajorValue, identifier: String) {
+    override fileprivate init(proximityUUID: UUID, major: CLBeaconMajorValue, identifier: String) {
         super.init(proximityUUID: proximityUUID, major: major, identifier: identifier)
         defaultValues()
     }
     
-    override private init(proximityUUID: UUID, major: CLBeaconMajorValue, minor: CLBeaconMinorValue, identifier: String) {
+    override fileprivate init(proximityUUID: UUID, major: CLBeaconMajorValue, minor: CLBeaconMinorValue, identifier: String) {
         super.init(proximityUUID: proximityUUID, major: major, minor: minor, identifier: identifier)
         defaultValues()
     }
