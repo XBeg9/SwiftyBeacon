@@ -38,16 +38,12 @@ open class SwiftyBeaconManager: NSObject {
     
     open fileprivate(set) var regions = Set<SwiftyBeaconRegion>()
     
-    open var logger: SwiftyBeaconLogger? {
-        set { logManager.logger = newValue }
-        get { return logManager.logger }
-    }
+    open var log = defaultLog
     
     open var authorizationStateHandler: BeaconManagerAutorizationStateHandler?
     open var bluetoothStateHandler: BeaconManagerBluetoothStateHandler?
     
     fileprivate var hasAskedToSwitchOnBluetooth = false
-    fileprivate var logManager = SwiftyBeaconLogManager()
     
     // MARK: - Init
     
@@ -163,33 +159,34 @@ extension SwiftyBeaconManager: CLLocationManagerDelegate {
                 locationManager.requestState(for: region)
             }
         }
-        
+        log(.debug) { "didChangeAuthorization: [\n\t\(status)\n]"}
         authorizationStateHandler?(status)
     }
     
     public func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
         if let beaconRegion = findBeaconRegion(region) {
-            logManager.debug { "\(beaconRegion)"}
             
+            log(.debug) { "didStartMonitoringFor: [\n\t\(beaconRegion)\n]"}
             locationManager.requestState(for: beaconRegion)
         }
     }
     
     public func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         if let beaconRegion = findBeaconRegion(region) {
-            logManager.debug { "\(beaconRegion)"}
+            log(.debug) { "didEnterRegion: [\n\t\(beaconRegion)\n]"}
         }
     }
     
     public func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         if let beaconRegion = findBeaconRegion(region) {
-            logManager.debug { "\(beaconRegion)"}
+            log(.debug) { "didExitRegion: [\n\t\(beaconRegion)\n]"}
         }
     }
     
     public func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
         if let beaconRegion = findBeaconRegion(region) {
-            logManager.debug { "\(state): \(region)"}
+
+            log(.debug) { "didDetermineState: [\n\t\(region) \n\tstate: \(state)\n]" }
             switch state {
             case .inside:
                 locationManager.startRangingBeacons(in: beaconRegion)
@@ -205,22 +202,22 @@ extension SwiftyBeaconManager: CLLocationManagerDelegate {
     
     public func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         if let beaconRegion = findBeaconRegion(region) {
-            logManager.verbose { "\(region)"}
+
             beaconRegion.rangeHandler?(beacons)
             handleBeaconsStatusChanges(beacons, forRegion: beaconRegion)
-            logManager.verbose { "\(beacons)"}
+            log(.verbose) { "didRangeBeacons: [\n\t\(beacons)\n]" }
         }
     }
     
     public func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
         if let region = region as? CLBeaconRegion, let beaconRegion = findBeaconRegion(region) {
-            logManager.error { "\(beaconRegion): \(error)"}
+            log(.error) { "monitoringDidFailFor: [\n\t\(beaconRegion) \n\terror: \(error)\n]" }
         }
     }
     
     public func locationManager(_ manager: CLLocationManager, rangingBeaconsDidFailFor region: CLBeaconRegion, withError error: Error) {
         if let beaconRegion = findBeaconRegion(region) {
-            logManager.error { "\(beaconRegion): \(error)"}
+            log(.error) { "rangingBeaconsDidFailFor: [\n\t\(beaconRegion) \n\terror: \(error)\n]" }
         }
     }
 }
@@ -240,16 +237,21 @@ extension SwiftyBeaconManager {
         let unrangedBeacons = handledBeacons.filter { !currentlyRangedBeacons.containsBeacon($0) }
         let newRangedBeacons = currentlyRangedBeacons.filter { !handledBeacons.containsBeacon($0) }
         
-        unrangedBeacons.forEach { (beacon) in
-            logManager.info { "\nDid unrange beacon:\n\(beacon)" }
-            region.unrangeBeaconHandler?(beacon)
+        if unrangedBeacons.count > 0 {
+            
+            unrangedBeacons.forEach { (beacon) in
+                region.unrangeBeaconHandler?(beacon)
+            }
+            log(.info) { "Did unrange beacons: [\n" + "\(unrangedBeacons)" + "\n]" }
         }
         
-        newRangedBeacons.forEach { (beacon) in
-            logManager.info { "\nDid range beacon:\n\(beacon)" }
-            region.rangeBeaconHandler?(beacon)
+        if newRangedBeacons.count > 0 {
+            
+            newRangedBeacons.forEach { (beacon) in
+                region.rangeBeaconHandler?(beacon)
+            }
+            log(.info) { "Did unrange beacons: [\n" + "\(newRangedBeacons)" + "\n]" }
         }
-        
         region.rangedBeacons = beacons
     }
 }

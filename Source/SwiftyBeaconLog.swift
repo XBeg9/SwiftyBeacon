@@ -8,46 +8,34 @@
 
 import Foundation
 
-public protocol SwiftyBeaconLogger {
+public enum LogLevel: CustomStringConvertible {
     
-    func verbose(functionName: String, fileName: String, lineNumber: Int, closure: () -> String?)
-    func debug(functionName: String, fileName: String, lineNumber: Int, closure: () -> String?)
-    func info(functionName: String, fileName: String, lineNumber: Int, closure: () -> String?)
-    func warning(functionName: String, fileName: String, lineNumber: Int, closure: () -> String?)
-    func error(functionName: String, fileName: String, lineNumber: Int, closure: () -> String?)
-    func severe(functionName: String, fileName: String, lineNumber: Int, closure: () -> String?)
-}
-
-internal class SwiftyBeaconLogManager {
+    case verbose
+    case debug
+    case info
+    case warning
+    case error
+    case severe
     
-    var logger: SwiftyBeaconLogger?
-    
-    func verbose(functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, closure: () -> String?) {
-
-        logger?.verbose(functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
-    }
-    
-    func debug(functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, closure: () -> String?) {
-        logger?.debug(functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
-    }
-    
-    func info(functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, closure: () -> String?) {
-        
-        logger?.info(functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
-    }
-    
-    func warning(functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, closure: () -> String?) {
-        
-        logger?.warning(functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
-    }
-    
-    func error(functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, closure: () -> String?) {
-        
-        logger?.error(functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
-    }
-    
-    func severe(functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, closure: () -> String?) {
-        
-        logger?.severe(functionName: functionName, fileName: fileName, lineNumber: lineNumber, closure: closure)
+    public var description: String {
+        switch self {
+        case .verbose:
+            return "Verbose"
+        case .debug:
+            return "Debug"
+        case .info:
+            return "Info"
+        case .warning:
+            return "Warning"
+        case .error:
+            return "Error"
+        case .severe:
+            return "Severe"
+        }
     }
 }
+
+public func defaultLog(level: LogLevel, closure: @escaping () -> String?) {
+    print("\(level): \(closure() ?? "")")
+}
+
